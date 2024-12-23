@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .scheduler-container {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .hour-label {
+            background-color: #f9f9f9;
+        }
+
+        .hour-label:nth-child(odd) {
+            background-color: #f4f4f4;
+        }
+
+        .highlighted {
+            background-color: #ffeb3b;
+        }
+
+        .half-highlighted {
+            background: linear-gradient(90deg, #ffeb3b 50%, transparent 50%);
+        }
+
+        .selected {
+            background-color: #ffeb3b;
+        }
+
+        .time-frame-selector {
+            margin-bottom: 20px;
+        }
+
+        .manual-input {
+            margin-top: 20px;
+        }
+
+        .manual-input label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .manual-input input, .manual-input select {
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .manual-input button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .manual-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        let isSelecting = false;
+        let startHour = 7;
+        let endHour = 21;
+
+        function toggleSelection(event) {
+            if (event.target.tagName === 'TD' && event.target.cellIndex > 0) {
+                event.target.classList.toggle('selected');
+            }
+        }
+
+        function enableSelection(table) {
+            table.addEventListener('mousedown', (event) => {
+                isSelecting = true;
+                toggleSelection(event);
+            });
+
+            table.addEventListener('mouseover', (event) => {
+                if (isSelecting) {
+                    toggleSelection(event);
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isSelecting = false;
+            });
+        }
+
+        function updateVisibleTimeFrame() {
+            const table = document.querySelector('table tbody');
+            const rows = table.querySelectorAll('tr');
+
+            rows.forEach((row, index) => {
+                if (index < startHour * 2 || index >= endHour * 2) {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = '';
+                }
+            });
+        }
+
+        function addManualBlock() {
+            const day = document.getElementById('day-select').value;
+            const fromTime = document.getElementById('from-time').value;
+            const toTime = document.getElementById('to-time').value;
+
+            if (!day || !fromTime || !toTime) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const fromHour = parseInt(fromTime.split(':')[0], 10);
+            const fromMinute = parseInt(fromTime.split(':')[1], 10);
+            const toHour = parseInt(toTime.split(':')[0], 10);
+            const toMinute = parseInt(toTime.split(':')[1], 10);
+
+            const table = document.querySelector('table tbody');
+            const dayIndex = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].indexOf(day) + 1;
+
+            for (let i = fromHour * 2; i <= toHour * 2; i++) {
+                const row = table.rows[i];
+                if (row) {
+                    const cell = row.cells[dayIndex];
+                    if (cell) {
+                        if (i === fromHour * 2 && fromMinute > 0) {
+                            cell.classList.add('half-highlighted');
+                        } else if (i === toHour * 2 && toMinute < 30) {
+                            cell.classList.add('half-highlighted');
+                        } else {
+                            cell.classList.add('highlighted');
+                        }
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const table = document.querySelector('table tbody');
+            enableSelection(table);
+            updateVisibleTimeFrame();
+
+            document.getElementById('time-frame-select').addEventListener('change', (event) => {
+                const [start, end] = event.target.value.split('-').map(Number);
+                startHour = start;
+                endHour = end;
+                updateVisibleTimeFrame();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="scheduler-container">
+        <h1>Weekly Schedule</h1>
+        <div class="time-frame-selector">
+            <label for="time-frame-select">Select Time Frame:</label>
+            <select id="time-frame-select">
+                <option value="7-21" selected>7:00 AM - 9:00 PM</option>
+                <option value="0-24">All Day</option>
+                <option value="6-18">6:00 AM - 6:00 PM</option>
+                <option value="9-17">9:00 AM - 5:00 PM</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Generate rows for 24 hours in 30-minute increments -->
+                <script>
+                    for (let i = 0; i < 48; i++) {
+                        const hour = Math.floor(i / 2);
+                        const minutes = i % 2 === 0 ? '00' : '30';
+                        document.write(`<tr>
+                            <td class='hour-label'>${hour}:${minutes}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>`);
+                    }
+                </script>
+            </tbody>
+        </table>
+
+        <div class="manual-input">
+            <h2>Manual Time Block Entry</h2>
+            <label for="day-select">Day</label>
+            <select id="day-select">
+                <option value="">Select Day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+
+            <label for="from-time">From</label>
+            <input type="time" id="from-time">
+
+            <label for="to-time">To</label>
+            <input type="time" id="to-time">
+
+            <button onclick="addManualBlock()">Add Time Block</button>
+        </div>
+    </div>
+</body>
+</html>
