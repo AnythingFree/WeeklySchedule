@@ -1,0 +1,165 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.scheduler-container {
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+
+.hour-label {
+    background-color: #f9f9f9;
+}
+
+.hour-label:nth-child(odd) {
+    background-color: #f4f4f4;
+}
+
+.highlighted {
+    background-color: #ffeb3b;
+}
+
+.selected {
+    background-color: #ffeb3b;
+}
+
+.manual-input-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+}
+
+.manual-input-popup h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-bottom: 15px;
+}
+
+.manual-input-popup label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.manual-input-popup input, .manual-input-popup select {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.manual-input-popup button {
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.manual-input-popup button:hover {
+    background-color: #0056b3;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.time-frame-selector {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.time-frame-selector label {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.time-frame-selector input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.manual-button {
+    display: inline-block;
+    float: right;
+    margin-top: -40px;
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.manual-button:hover {
+    background-color: #0056b3;
+}
+
+select#time-format {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
