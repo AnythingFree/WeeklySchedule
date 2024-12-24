@@ -227,3 +227,11 @@ function saveEdit(block) {
     // popup.remove();
     hidePopup();
 }
+
+function deleteAll() {
+    if (confirm("Are you sure you want to delete all time blocks?")) {
+        timeBlocks.length = 0;
+        saveTimeBlocks();
+        renderTable();
+    }
+}

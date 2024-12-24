@@ -148,13 +148,13 @@ th {
     margin-right: 10px;
 }
 
-.buttons-save-manual {
+.buttons-container-top {
     float: right;
     margin-top: -60px;
     margin-bottom: 20px;
 }
 
-.save-button {
+.deleteAll-button {
     padding: 12px 30px;
     background-color: #007BFF; /* (199, 57, 57); */
     color: white;
@@ -271,7 +271,7 @@ select#time-format {
         margin-bottom: 15px;
     }
 
-    .save-button {
+    .deleteAll-button {
         padding: 10px 20px;
         font-size: 0.9rem;
         display: flex;
