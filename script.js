@@ -22,7 +22,8 @@ async function loadTimeBlocks() {
     try {
         const response = await fetch('/.netlify/functions/timeBlocks');
         if (!response.ok) throw new Error('Failed to fetch time blocks');
-        timeBlocks = await response.json();
+        savedBlocks = await response.json();
+        savedBlocks.forEach(block => timeBlocks.push(block));
     } catch (error) {
         console.error('Error loading time blocks:', error);
     }
