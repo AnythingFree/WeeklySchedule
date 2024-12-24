@@ -237,4 +237,46 @@ select#time-format {
 }
 
 
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .scheduler-container {
+        padding: 10px;
+        overflow-x: auto;
+    }
 
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    th, td {
+        font-size: 0.9rem;
+        padding: 6px;
+    }
+
+    .time-frame-selector label, .time-frame-selector input {
+        font-size: 0.9rem;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .time-frame-selector label {
+        margin-bottom: 5px;
+    }
+
+    .time-frame-selector input {
+        margin-bottom: 15px;
+    }
+
+    .save-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        
+    }
+    
+
+    
+} 
