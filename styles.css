@@ -241,6 +241,9 @@ select#time-format {
 @media (max-width: 768px) {
     .scheduler-container {
         padding: 10px;
+    }
+
+    .table-container {
         overflow-x: auto;
     }
 
