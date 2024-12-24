@@ -10,11 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
     toInput.addEventListener('change', renderTable);
 
     // Load saved blocks from local storage
-    const savedBlocks = JSON.parse(localStorage.getItem('timeBlocks')) || [];
-    savedBlocks.forEach(block => timeBlocks.push(block));
+    loadTimeBlocks();
+    // const savedBlocks = JSON.parse(localStorage.getItem('timeBlocks')) || [];
+
+    // savedBlocks.forEach(block => timeBlocks.push(block));
 
     renderTable(); // Initial render
 });
+
+async function loadTimeBlocks() {
+    try {
+        const response = await fetch('/.netlify/functions/timeBlocks');
+        if (!response.ok) throw new Error('Failed to fetch time blocks');
+        timeBlocks = await JSON.parse(response.json());
+    } catch (error) {
+        console.error('Error loading time blocks:', error);
+    }
+}
+
+async function saveTimeBlocks() {
+    try {
+        const response = await fetch('/.netlify/functions/timeBlocks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(timeBlocks),
+        });
+        if (!response.ok) throw new Error('Failed to save time blocks');
+    } catch (error) {
+        console.error('Error saving time blocks:', error);
+    }
+}
 
 function renderTable() {
     const fromHour = parseInt(fromInput.value.split(':')[0], 10);
@@ -114,7 +139,7 @@ function editTimeBlock(block) {
 function deleteBlock(block, popup) {
     const index = timeBlocks.indexOf(block);
     timeBlocks.splice(index, 1);
-    localStorage.setItem('timeBlocks', JSON.stringify(timeBlocks));
+    saveTimeBlocks();
     renderTable();
     hidePopup();
 }
@@ -169,9 +194,9 @@ function addManualBlock() {
     const block = { day, fromTime, toTime };
     timeBlocks.push(block);
 
-    // Persist blocks to local storage
-    localStorage.setItem('timeBlocks', JSON.stringify(timeBlocks));
-
+    // Save to storage
+    saveTimeBlocks();
+    
     // Apply the block to the table
     applyTimeBlock(block);
 
@@ -191,7 +216,8 @@ function saveEdit(block) {
     block.toTime = toTime;
 
     // Save to local storage
-    localStorage.setItem('timeBlocks', JSON.stringify(timeBlocks));
+    // localStorage.setItem('timeBlocks', JSON.stringify(timeBlocks));
+    saveTimeBlocks();
 
     // Re-render the table
     renderTable();
