@@ -4,13 +4,13 @@ const fromInput = document.getElementById('visible-from-time');
 const toInput = document.getElementById('visible-to-time');
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     fromInput.addEventListener('change', renderTable);
     toInput.addEventListener('change', renderTable);
 
     // Load saved blocks from local storage
-    loadTimeBlocks();
+    await loadTimeBlocks();
     // const savedBlocks = JSON.parse(localStorage.getItem('timeBlocks')) || [];
 
     // savedBlocks.forEach(block => timeBlocks.push(block));
@@ -22,7 +22,7 @@ async function loadTimeBlocks() {
     try {
         const response = await fetch('/.netlify/functions/timeBlocks');
         if (!response.ok) throw new Error('Failed to fetch time blocks');
-        timeBlocks = await JSON.parse(response.json());
+        timeBlocks = await response.json();
     } catch (error) {
         console.error('Error loading time blocks:', error);
     }
