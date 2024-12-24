@@ -15,6 +15,17 @@ body {
     position: relative;
 }
 
+#schedule-table td {
+    cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+    transition: background-color 0s; /* Smooth transition for hover effect */
+}
+
+
+#schedule-table td:not(.highlighted):hover {
+    background-color: lightblue; /* Hover effect only for non-highlighted cells */
+    transition: background-color 0.3s;
+}
+
 h1 {
     font-size: 2rem;
     text-align: center;
@@ -86,7 +97,6 @@ th {
 .manual-input-popup input, .manual-input-popup select {
     padding: 10px;
     margin-bottom: 15px;
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
@@ -138,10 +148,23 @@ th {
     margin-right: 10px;
 }
 
-.manual-button {
-    display: inline-block;
+.buttons-save-manual {
     float: right;
-    margin-top: -40px;
+    margin-top: -60px;
+    margin-bottom: 20px;
+}
+
+.save-button {
+    padding: 12px 30px;
+    background-color: rgb(199, 57, 57);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.manual-button {
     padding: 12px 20px;
     background-color: #007BFF;
     color: white;
@@ -162,4 +185,56 @@ select#time-format {
     border-radius: 4px;
     margin-left: 10px;
 }
+
+
+.edit-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.edit-popup h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-bottom: 15px;
+}
+.edit-popup label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.edit-popup input, .edit-popup select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.edit-popup button {
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.edit-popup button:hover {
+    background-color: #0056b3;
+}
+
+
 

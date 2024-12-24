@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="popup-overlay" onclick="hidePopup()"></div>
-
     <div class="manual-input-popup">
         <h2>Manual Time Block Entry</h2>
         <label for="day-select">Day</label>
@@ -26,8 +25,10 @@
         <input type="time" id="from-time">
         <label for="to-time">To</label>
         <input type="time" id="to-time">
-        <button onclick="addManualBlock()">Add Time Block</button>
-        <button onclick="hidePopup()">Cancel</button>
+        <div class="button-container-manual">
+            <button onclick="addManualBlock()">Add Time Block</button>
+            <button onclick="hidePopup()">Cancel</button>
+        </div>
     </div>
 
     <div class="scheduler-container">
@@ -38,7 +39,10 @@
             <label for="visible-to-time">To:</label>
             <input type="time" id="visible-to-time" value="19:00">
         </div>
-        <button class="manual-button" onclick="showPopup()">Manual Time Block Entry</button>
+        <div class="buttons-save-manual">
+            <button class="manual-button" onclick="showPopup()">Manual Time Block Entry</button>
+            <button class="save-button" onclick="saveSession()">Save Schedule</button>   
+        </div>
         <table>
             <thead>
                 <tr>
@@ -55,6 +59,15 @@
             <tbody id="schedule-table"></tbody>
         </table>
     </div>
+   
+    <footer style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: gray;">
+        <p>
+            Copyright &copy; 2024 
+            <a href="https://chatgpt.com/" target="_blank" id="chatGPT-link" style="color: inherit; text-decoration: underline;">ChatGPT</a> |
+            <a href="https://github.com/AnythingFree/" target="_blank" id="anythingFree-link" style="color: inherit; text-decoration: underline;">AnythingFree</a>
+        </p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
