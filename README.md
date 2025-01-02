@@ -1,6 +1,6 @@
 # PlanToMeet
 
-[PlanToMeet](https://plantomeet.netlify.app/) is a web application designed to help users manage and schedule time blocks for meetings.
+[PlanToMeet](https://plantomeet.netlify.app/) is a simple web application designed to help me schedule meetings with friends.
 
 ## Technologies Used
 
@@ -11,7 +11,8 @@
 ## Getting Started
 
 1. Visit the app: [PlanToMeet](https://plantomeet.netlify.app/)
-2. Create, edit, and manage your time blocks.
+2. [[[ (TO DO) input your id ]]]
+3. Create, edit, and manage your time blocks.
 
 ## How It Works
 
