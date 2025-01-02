@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ===================== LOAD SAVE DELETE TIME BLOCKS =========================
 async function loadTimeBlocks() {
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'block'; // Show spinner
+
     try {
         const response = await fetch('/.netlify/functions/timeBlocks');
         if (!response.ok) throw new Error('Failed to fetch time blocks');
@@ -31,6 +34,8 @@ async function loadTimeBlocks() {
         });
     } catch (error) {
         console.error('Error loading time blocks:', error);
+    } finally {
+        spinner.style.display = 'none'; // Hide spinner
     }
 }
 
@@ -68,41 +73,49 @@ async function deleteTimeBlock(id) {
 
 // =================== RENDER TABLE ===================================
 function renderTable() {
-    const fromHour = parseInt(fromInput.value.split(':')[0], 10);
-    const toHour = parseInt(toInput.value.split(':')[0], 10) + 1;
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'block'; // Show spinner
 
-    table.innerHTML = ''; // Clear existing rows
+    setTimeout(() => {
+        const fromHour = parseInt(fromInput.value.split(':')[0], 10);
+        const toHour = parseInt(toInput.value.split(':')[0], 10) + 1;
 
-    for (let i = fromHour; i < toHour; i++) {
-        const displayHour = `${i.toString().padStart(2, '0')}:00`;
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td class='hour-label'>${displayHour}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        `;
-        table.appendChild(row);
-    }
+        table.innerHTML = ''; // Clear existing rows
 
-    // Make all cells clickable
-    Array.from(table.rows).forEach((row, rowIndex) => {
-        if (rowIndex >= 0) { // Skip header row
-            Array.from(row.cells).forEach((cell, cellIndex) => {
-                if (cellIndex > 0) { // Skip hour label column
-                    cell.addEventListener('click', () => showManualPopup(cellIndex, row.cells[0].textContent));
-                }
-            });
+        for (let i = fromHour; i < toHour; i++) {
+            const displayHour = `${i.toString().padStart(2, '0')}:00`;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class='hour-label'>${displayHour}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            `;
+            table.appendChild(row);
         }
-    });
 
-    // Reapply saved blocks
-    timeBlocks.forEach(block => applyTimeBlock(block));
+        // Make all cells clickable
+        Array.from(table.rows).forEach((row, rowIndex) => {
+            if (rowIndex >= 0) { // Skip header row
+                Array.from(row.cells).forEach((cell, cellIndex) => {
+                    if (cellIndex > 0) { // Skip hour label column
+                        cell.addEventListener('click', () => showManualPopup(cellIndex, row.cells[0].textContent));
+                    }
+                });
+            }
+        });
+
+        // Reapply saved blocks
+        timeBlocks.forEach(block => applyTimeBlock(block));
+
+        spinner.style.display = 'none'; // Hide spinner
+    }, 200); // Simulate delay for smoother spinner transition
 }
+
 
 
 function removeAllListenersFromCell(cell) {
