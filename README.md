@@ -11,8 +11,7 @@
 ## Getting Started
 
 1. Visit the app: [PlanToMeet](https://plantomeet.netlify.app/)
-2. [[[ (TO DO) input your id ]]]
-3. Create, edit, and manage your time blocks.
+2. Create, edit, and manage your time blocks.
 
 ## How It Works
 
